@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <title>Short Url</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $("#convertUrlButton").click(function(){
+                $.post({
+                    url: "api/v1/shortUrl",
+                    contentType: "application/json",
+                    data : JSON.stringify({"originUrl" : $('#originUrlInput').val()}),
+                    dataType: 'json',
+                    success: function(result){
+                        $("#shortUrl").html("Your shortened URL : " + result.shortUrl);
+                    },
+                    error: function(result) {
+                        $("#originUrlInput").val("");
+                        $("#shortUrl").html(result.message);
+                    }
+                })
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <div class="container">
+        <div class="row" style="margin-top: 10px;">
+            <H2 style="color:#003399;">Short Url</H2>
+        </div>
+        <div class="row" style="margin-top: 20px;">
+            <div class="input-group mb-3">
+                <input type="text" id="originUrlInput" class="form-control" placeholder="Please enter the full URL to convert." aria-label="Please enter the full URL to convert." aria-describedby="convertUrlButton">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-primary" type="button" id="convertUrlButton">Convert</button>
+                </div>
+            </div>
+        </div>
+        <div class="row" style="margin-top: 5px;">
+            <p class="font-weight-bold" id="shortUrl"></p>
+        </div>
+    </div>
+
+</body>
+
+</html>
