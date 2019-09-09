@@ -19,8 +19,8 @@
                         $("#shortUrl").html("Your shortened URL : " + result.shortUrl);
                     },
                     error: function(result) {
+                        $("#shortUrl").html("[ERROR] '"+$("#originUrlInput").val() +"'  :   "+result.responseJSON.message);
                         $("#originUrlInput").val("");
-                        $("#shortUrl").html(result.message);
                     }
                 })
             });
